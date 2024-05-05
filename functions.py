@@ -103,11 +103,11 @@ def newton_method(f, fprime, initial_guess, tolerance=1e-6, max_iterations=100):
 
 def draw_graph(equation, left_point, right_point):
     x = np.linspace(left_point, right_point, 400)
-    y = equation
-    
-    plt.plot(x ,y)
-    plt.title("Graph of {}".format(equation))    # set the title for the plot
-    plt.xlabel('X-axis')             # set the label for the x-axis
-    plt.ylabel('Y-axis')             # set the label for the y-axis
-    plt.show()                      # display the plot
+    y = eval("lambda x: " + equation)(x)
+
+    plt.plot(x, y)
+    plt.title("Graph of {}".format(equation))     # set the title for the plot
+    plt.xlabel('X-axis')              # set the label for the x-axis
+    plt.ylabel('Y-axis')              # set the label for the y-axis
+    plt.show()
 

@@ -28,7 +28,7 @@ while i == 0:
         fprime = input("What is the derivative function (E.g 2x): ")
         initial_guess = float(input("What is the initial Guess: "))
         newton_method(f, fprime, initial_guess)
-    elif choice == "6":
+    elif choice == "5":
         equ = input("What is the equation for the graph: ")
         left = int(input("What is the left point of the graph (starts from): "))
         right = int(input("What is the right side of the graph (ends at): "))
