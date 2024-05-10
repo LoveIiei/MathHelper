@@ -3,6 +3,8 @@ from tkinter import messagebox
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+import ast
+import webbrowser
 
 class Calculator:
     def __init__(self, root):
@@ -12,7 +14,7 @@ class Calculator:
     def create_widgets(self):
         # Create a frame for quadratic formula function
         input_frame = tk.Frame(self.root)
-        input_frame.pack(padx=10, pady=10)
+        input_frame.grid(row=0, column=0, padx=10, pady=10)
 
          # Create labels and entry fields for quadratic formula function
         self.a_label    = tk.Label(input_frame, text="a:")
@@ -36,7 +38,7 @@ class Calculator:
 
          # Create a frame for the inputs and buttons for standard deviation function
         std_dev_frame  = tk.Frame(self.root)
-        std_dev_frame.pack(padx=10, pady=10)
+        std_dev_frame.grid(row=1, column=0, padx=10, pady=10)
 
          # Create label and entry field for standard deviation function
         self.std_dev_label   = tk.Label(std_dev_frame, text="Enter your dataset (comma-separated numbers):")
@@ -50,30 +52,30 @@ class Calculator:
 
          # Create a frame for the inputs and buttons for limit definition function
         limit_def_frame  = tk.Frame(self.root)
-        limit_def_frame.pack(padx=10, pady=10)
+        limit_def_frame.grid(row=2, column=0, padx=10, pady=10)
 
-         # Create labels and entry fields for limit definition function
+        # Create labels and entry fields for limit definition function
         self.limit_def_a_label    = tk.Label(limit_def_frame, text="a:")
-        self.limit_def_a_label.pack()
+        self.limit_def_a_label.grid(row=0, column=0)
         self.limit_def_a_entry   = tk.Entry(limit_def_frame)
-        self.limit_def_a_entry.pack()
+        self.limit_def_a_entry.grid(row=0, column=1)
 
         self.limit_def_b_label    = tk.Label(limit_def_frame, text="b:")
-        self.limit_def_b_label.pack()
+        self.limit_def_b_label.grid(row=1, column=0)
         self.limit_def_b_entry   = tk.Entry(limit_def_frame)
-        self.limit_def_b_entry.pack()
+        self.limit_def_b_entry.grid(row=1, column=1)
 
         self.limit_def_c_label    = tk.Label(limit_def_frame, text="c:")
-        self.limit_def_c_label.pack()
+        self.limit_def_c_label.grid(row=2, column=0)
         self.limit_def_c_entry   = tk.Entry(limit_def_frame)
-        self.limit_def_c_entry.pack()  
+        self.limit_def_c_entry.grid(row=2, column=1)  
 
-         # Create button for limit definition function
+        # Create button for limit definition function
         self.limit_def_button  = tk.Button(limit_def_frame, text="Limit Definition", command=self.limit_definition)
-        self.limit_def_button.pack()
+        self.limit_def_button.grid(row=3, column=0, columnspan=2)
 
         graph_frame = tk.Frame(self.root)
-        graph_frame.pack(padx=10, pady=10)
+        graph_frame.grid(row=3, column=0, padx=10, pady=10)
 
         # labels for draw_graph
         self.graph_equ = tk.Label(graph_frame, text="Equation: ")
@@ -94,6 +96,24 @@ class Calculator:
         # buttons for draw_graph
         self.graph_button = tk.Button(graph_frame, text="Draw Graph", command=self.draw_graph)
         self.graph_button.pack()
+        
+        # Creating second col for matrix_frame
+        matrix_frame = tk.Frame(self.root)
+        matrix_frame.grid(row=0, column=1, padx=10, pady=10)
+        self.matrix_info = tk.Label(matrix_frame, text="Enter matrix like [[1, 2], [3, 4]]")
+        self.matrix_info.grid(row=0, column=0)
+        self.matrix_1 = tk.Label(matrix_frame, text="Matrix 1: ")
+        self.matrix_1.grid(row=1, column=0)
+        self.matrix_1_entry = tk.Entry(matrix_frame)
+        self.matrix_1_entry.grid(row=1, column=1)
+        self.matrix_2 = tk.Label(matrix_frame, text="Matrix 2: ")
+        self.matrix_2.grid(row=2, column=0)
+        self.matrix_2_entry = tk.Entry(matrix_frame)
+        self.matrix_2_entry.grid(row=2, column=1)
+
+        # buttons for matrix operations
+        self.matrix_add_button = tk.Button(matrix_frame, text="Matrix Operations", command=self.matrix_operation)
+        self.matrix_add_button.grid(row=3, column=0, columnspan=2)
 
 
     def quadratic_formula(self):
@@ -144,10 +164,37 @@ class Calculator:
 
         plt.plot(x, y)
         plt.title(f"Graph for {self.graph_equ_entry.get()}")
-        plt.xlable = "X-axis"
-        plt.ylable = "Y-axis"
+        plt.xlabel = "X-axis"
+        plt.ylabel = "Y-axis"
         plt.show(block=False)
         self.root.focus_force()
+
+
+    def matrix_operation(self):
+        matrix1 = self.matrix_1_entry.get()
+        matrix2 = self.matrix_2_entry.get()    # Convert the strings to lists of numbers
+        matrix1 = ast.literal_eval(matrix1)
+        matrix2 = ast.literal_eval(matrix2)
+        matrix1 = np.array(matrix1)
+        matrix2 = np.array(matrix2)
+        addition = matrix1 + matrix2
+        result_subtraction = matrix1 - matrix2
+        result_multiplication = np.dot(matrix1, matrix2)
+        matrix3 = np.transpose(matrix1)
+        matrix4 = np.transpose(matrix2)
+        determinant_matrix1 = np.linalg.det(matrix1)
+        determinant_matrix2 = np.linalg.det(matrix2)
+        inverse_matrix1 = np.linalg.inv(matrix1)
+        inverse_matrix2 = np.linalg.inv(matrix2)
+        eigen_values, eigen_vectors = np.linalg.eig(matrix1)
+        messagebox.showinfo("Addition", f"Addtion: {addition},\n Subtraction: {result_subtraction},\n "+
+            f"Multiplication: {result_multiplication},\n TranposeM1: {matrix3},\n DeterM1: {determinant_matrix1},\n "+ 
+            f"InverseM1: {inverse_matrix1},\n TranposeM2: {matrix4},\n DeterM2: {determinant_matrix2},\n InverseM2: {inverse_matrix2},\n "+ 
+            f"EigenValues: {eigen_values},\n EigenVectors: {eigen_vectors}")
+        self.root.focus_force()
+        
+        
+
 
 if __name__ == "__main__":
     root = tk.Tk()  # Create an instance of Tk()
