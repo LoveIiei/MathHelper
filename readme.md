@@ -19,6 +19,15 @@ pip install -r requirements.txt
 python3 gui.py
 ```
 
+### Road Map:
+- [ ] Add more Calculus helper
+- [ ] Add more Statistics Helper
+- [ ] Add more Physics Helper
+- [ ] Add more useful resources
+- [ ] Allow user to choose which part of the Helper they want(E.g only download physics)
+- [ ] Allow downloading other Helpers as a plugin
+- [ ] Optimize the code
+
 > [!CAUTION]
 > if python3 not working, try using python gui.py
 

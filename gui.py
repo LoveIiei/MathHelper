@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import TRUE, messagebox
+from tkinter import messagebox
 import math
 import numpy as np
 import matplotlib.pyplot as plt
