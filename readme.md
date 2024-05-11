@@ -13,12 +13,12 @@
 ```
 git clone https://github.com/LoveIiei/MathHelper.git
 cd MathHelper
-pip3 install requirements.txt
+pip install -r requirements.txt
 python3 gui.py
 ```
 
 > [!CAUTION]
-> if python3 or pip3 not working, try use pip install/python gui.py
+> if python3 not working, try using python gui.py
 
 Copyright (c) 2024 Owen. All Rights Reserved.
 
