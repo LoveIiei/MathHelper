@@ -184,15 +184,50 @@ class Calculator:
         # self.root.focus_force()
 
     def limit_definition(self):
-        a = float(self.limit_def_a_entry.get())
-        b = float(self.limit_def_b_entry.get())
-        c = float(self.limit_def_c_entry.get())
-        epsilon = 0  # Assuming epsilon is 0, you can replace this with the actual value if needed
-
-        if a > epsilon and b > epsilon and c > epsilon:
-            messagebox.showinfo("Limit Definition", "The limit exists")
+        x_approach = self.limit_def_a_entry.get()
+        l_value = self.limit_def_b_entry.get()
+        if x_approach == "in":
+            x_symbol = "N"
+            x_range = "(N, ∞)"
+            x_algebra = "(x > N)"
+        elif x_approach == "-in":
+            x_symbol = "N"
+            x_range = "(-∞, -N)"
+            x_algebra = "(x < -N)"
         else:
-            messagebox.showerror("Limit Definition", "The limit does not exist")
+            side = self.limit_def_c_entry.get()
+            x_symbol = "𝛿"
+            x = float(x_approach)
+            if side == "l" or side == "L":
+                x_range = f"({x} - 𝛿, {x})"
+                x_algebra = f"(0 < |-x - {x}| < 𝛿)"
+            elif side == "r" or side == "R":
+                x_range = f"({x}, {x} + 𝛿)"
+                x_algebra = f"(0 < |x - {x}| < 𝛿)"
+            else:
+                x_range = f"({x} - 𝛿, {x}) U ({x}, {x} + 𝛿)"
+                x_algebra = f"(0 < |x - {x}| < 𝛿)"
+
+        if l_value == "in":
+            y_symbol = "M"
+            y_range = "(M, ∞)"
+            y_algebra = "(f(x) > M)"
+        elif l_value == "-in":
+            y_symbol = "M"
+            y_range = "(-∞, -M)"
+            y_algebra = "(f(x) < -M)"
+        else:
+            y_symbol = "ε"
+            y = float(l_value)
+            y_range = f"({y} - ε, {y} + ε)"
+            y_algebra = f"(|f(x) - {y}| < ε)"
+
+        limit = (
+            f"Limit Definition: ∀ {y_symbol} > 0 ∃ {x_symbol} > 0 st x in {x_range}"
+            f" => f(x) in {y_range}"
+        )
+        limit_algebra = f"Algebraic Limit: ∀ {y_symbol} > 0 ∃ {x_symbol} > 0 st {x_algebra} => {y_algebra}"
+        messagebox.showinfo(limit + "\n" + limit_algebra)
 
     def draw_graph(self):
         left = float(self.graph_left_entry.get())
