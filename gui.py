@@ -242,6 +242,12 @@ class Calculator:
         plt.show(block=False)
         self.root.focus_force()
 
+    def check_operation(self, matrix1, matrix2):
+        if len(matrix1) != len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
+            messagebox.showerror("Error", "Matrix must be of same size")
+            return False
+        return True
+
     def matrix_operation(self):
         matrix1 = self.matrix_1_entry.get()
         matrix2 = self.matrix_2_entry.get()  # Convert the strings to lists of numbers
@@ -249,16 +255,33 @@ class Calculator:
         matrix2 = ast.literal_eval(matrix2)
         matrix1 = np.array(matrix1)
         matrix2 = np.array(matrix2)
-        addition = matrix1 + matrix2
-        result_subtraction = matrix1 - matrix2
-        result_multiplication = np.dot(matrix1, matrix2)
+        no = "No answer"
+        if self.check_operation(matrix1, matrix2) == True:
+            addition = matrix1 + matrix2
+            result_subtraction = matrix1 - matrix2
+            result_multiplication = np.dot(matrix1, matrix2)
+        else:
+            addition = no
+            result_subtraction = no
+            result_multiplication = no
         matrix3 = np.transpose(matrix1)
         matrix4 = np.transpose(matrix2)
-        determinant_matrix1 = np.linalg.det(matrix1)
-        determinant_matrix2 = np.linalg.det(matrix2)
-        inverse_matrix1 = np.linalg.inv(matrix1)
-        inverse_matrix2 = np.linalg.inv(matrix2)
-        eigen_values, eigen_vectors = np.linalg.eig(matrix1)
+        try:
+            determinant_matrix1 = np.linalg.det(matrix1)
+        except:
+            determinant_matrix1 = mp
+        try:
+            determinant_matrix2 = np.linalg.det(matrix2)
+        except:
+            determinant_matrix2 = no
+        inverse_matrix1 = no
+        inverse_matrix2 = no
+        eigen_values, eigen_vectors = no, no
+        if determinant_matrix1 != 0 and determinant_matrix1 != no:
+            inverse_matrix1 = np.linalg.inv(matrix1)
+            eigen_values, eigen_vectors = np.linalg.eig(matrix1)
+        if determinant_matrix2 != 0 and determinant_matrix2 != no:
+            inverse_matrix2 = np.linalg.inv(matrix2)
         messagebox.showinfo(
             "Addition",
             f"Addtion: {addition},\n Subtraction: {result_subtraction},\n "
