@@ -269,7 +269,7 @@ class Calculator:
         try:
             determinant_matrix1 = np.linalg.det(matrix1)
         except:
-            determinant_matrix1 = mp
+            determinant_matrix1 = no
         try:
             determinant_matrix2 = np.linalg.det(matrix2)
         except:
